@@ -28,7 +28,7 @@ Zgornje Hessenbergova matrika se dobi iz Hessenbergovega razcepa določene matri
 Izračuna zgornje Hessenbergov razcep matrike `A` in dimenzije `nxn`. Vrne zgornje Hessenbergovo matriko ter matriko prehoda `Q`, ki omogoča transformacijo matrike `A` v zgornje Hessenbergovo matriko.
 Householderjeva zrcaljenja potekajo tako:
 - iz matrike A vzamemo vektor pod $p$-tim elementom na glavni diagonali (v prvi iteraciji to je prvi element): 
-$$
+\[
 \begin{bmatrix}
 a & b & \cdots & c & d \\
 x & e & \cdots & f & g \\
@@ -36,16 +36,16 @@ x & h & \cdots & i & j \\
 \vdots & \vdots & \ddots & \vdots & \vdots \\
 x & w & \cdots & y & z
 \end{bmatrix}
-$$
+\]
 - dobimo nek vektor $x$
 - ustvarimo vektor $w$, kjer je prva komponenta različnega predznaka kot prva komponenta vektora $x$:
-$$
+\[
 \begin{bmatrix}
 \pm \|x\| \\
 0 \\
 0
 \end{bmatrix}
-$$
+\]
 - izračunamo vektor $v = w - x$
 - ustvarimo matriko $P = \frac{vv^T}{v^Tv}$
 - izračunamo matriko $\hat{H} = I - 2P$, ki je ortogonalno simetrična matrika
