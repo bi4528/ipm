@@ -2,8 +2,8 @@
 
 Modul `IpmZgornjeHessenbergova` vsebuje implementacijo inverzne potenčne metode z uporabo zgornje Hessenbergove matrike, ki jo lahko uporabimo za iskanje ničle polinoma:
 $x^n + a_{n-1}x^{n-2}+...+a_1x+a_0$  
-Vsakemu takšnemu polinomu lahko priredimo matriko
-$$
+Vsakemu takšnemu polinomu lahko priredimo matriko 
+```math
 \begin{bmatrix}
 0 & 0 & \cdots & 0 & -a_0 \\
 1 & 0 & \cdots & 0 & -a_1 \\
@@ -11,7 +11,7 @@ $$
 \vdots & \vdots & \ddots & \vdots & \vdots \\
 0 & 0 & \cdots & 1 & -a_{n-1}
 \end{bmatrix}
-$$
+```
 in z inverzno potenčno metodo lahko pridobimo njeno lastno vrednost, ki je ničla tega polinoma. 
 Inverzna potenčna metoda je implementirana tako, da se na poljubni matriki z metodo `hessenberg` najprej naredi Hessenbergov razcep iz katerega pridobimo zgornje Hessenbergovo matriko. Potem pa naredimo LU razcep pridobljene zgornje Hessenbergove matrike z uporabo metode `lu` iz modula `IpmZgornjeHessenbergova`. Na koncu pa rešujemo sistem $L(Ux^{n+1})=x^{n}$ znotraj metode `inv_lastni`.
 
@@ -27,8 +27,8 @@ Zgornje Hessenbergova matrika se dobi iz Hessenbergovega razcepa določene matri
 
 Izračuna zgornje Hessenbergov razcep matrike `A` in dimenzije `nxn`. Vrne zgornje Hessenbergovo matriko ter matriko prehoda `Q`, ki omogoča transformacijo matrike `A` v zgornje Hessenbergovo matriko.
 Householderjeva zrcaljenja potekajo tako:
-- iz matrike A vzamemo vektor pod $p$-tim elementom na glavni diagonali (v prvi iteraciji to je prvi element): 
-\[
+- iz matrike A vzamemo vektor pod $p$-tim elementom na glavni diagonali (v prvi iteraciji to je prvi element):
+```math
 \begin{bmatrix}
 a & b & \cdots & c & d \\
 x & e & \cdots & f & g \\
@@ -36,16 +36,16 @@ x & h & \cdots & i & j \\
 \vdots & \vdots & \ddots & \vdots & \vdots \\
 x & w & \cdots & y & z
 \end{bmatrix}
-\]
+```
 - dobimo nek vektor $x$
 - ustvarimo vektor $w$, kjer je prva komponenta različnega predznaka kot prva komponenta vektora $x$:
-\[
+```math
 \begin{bmatrix}
 \pm \|x\| \\
 0 \\
 0
 \end{bmatrix}
-\]
+```
 - izračunamo vektor $v = w - x$
 - ustvarimo matriko $P = \frac{vv^T}{v^Tv}$
 - izračunamo matriko $\hat{H} = I - 2P$, ki je ortogonalno simetrična matrika
@@ -95,7 +95,8 @@ Zaradi majhnega števila nenačelnih elementov, v vektorju L hranimo samo nenič
 
 Rešuje problem za prirejeno matriko polinoma, ki je podana z matriko `A` in začetnim približkom za lastno vrednost `l`. Vrne lastni vektor in lastno vrednost. 
 Metoda implementira algoritem [*Algorithm 18.6: Inverse Iteration to Find Eigenvector of an Upper Hessenberg Matrix*](https://www.sciencedirect.com/topics/mathematics/inverse-power-method):
-![](./ipm_alg.png)
+![](https://github.com/bi4528/ipm/blob/master/IpmZgornjeHessenbergova/ipm_alg.png)
+
 V implementaciji je posebna pozornost namenjena, če je matrika U iz LU razcepa zgornje Hessenbergove matrike singularna. V tem primeru se reševanje sistema $L(Ux^{n+1})=x^{n}$ ne izvaja, ker je `l` že lastna vrednost matrike `A`.
 
 Zaradi implementacije matrike `L` kot vektorja, je definiran poseben operator `\`, ki uporablja dejstvo, da je matrika `L` bidiagonalna. Zaradi tega reševanje `y = L \ xn`, kjer je `xn` lastni vektor poteka kot `y_i+1 = y_i+1 - l_i*x_i`.
